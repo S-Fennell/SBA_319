@@ -1,9 +1,31 @@
 import mongoose from "mongoose";
 
-const inventorySchema = new mongoose.Schema(
+const itemSchema = new mongoose.Schema(
     {
-    
+        name:{
+            type: String,
+            required: true
+        },
+        brand:{
+            type: String,
+            required: false
+        },
+        weight:{
+            type: String,
+            required: false
+        },
+        qty:{
+            type: Number,
+            required: true
+        },
+        cost:{
+            type: Number,
+            required: true
+        }
+    },
+    {
+        timestamps: true
     }
 );
 
-export default mongoose.model("Inventory", inventorySchema, "inventory");
+export default mongoose.model("Item", itemSchema, "items");
