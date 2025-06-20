@@ -1,0 +1,4 @@
+Creating an invetory database.
+user should be able to add and remove items to the inventory database.
+there will be a inventoryschema and a post schema for feedback on items.
+users will be able to look up and check itme price and other details about the item.
