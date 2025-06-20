@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import Item from "./models/inventory.js";
+import Item from "./models/items.js";
 
 const app = express();
 
@@ -13,6 +13,30 @@ app.use(express.json());
 app.get('/', (req, res) =>{
     res.send(`Excuse me miss`);
 });
+
+//C# Now I want to creat code that will let me see the added items like I can see them in my database
+//this is for viewing listings
+app.get('/items', async(req,res)=>{
+    try{
+        const item = await Item.find({});//this will find everything in the database
+        res.status(200).json(item)// if successful we will send this response with the item information. when the item are found it will stored in the item variable. The empty bracet indicates all/everything in the database and turning it to json form
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+//D# as a follow up to part C# I want to get just one item instead of all the products and get it by id.
+app.get('/items/:id', async(req, res)=>{
+    try{
+        const{id} = req.params;
+        const item = await Item.findById(id);
+        res.status(200).json({item});
+
+    }catch (error){
+        res.status(500).json({message: error.message});
+    }
+});
+
 
 //A# We are going to start here after creating our item model schema/blue print
 app.post('/items', async(req, res)=>{//B# we added an async to add the item create
