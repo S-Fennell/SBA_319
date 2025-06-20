@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import Item from "./models/items.js";
+import Users from "./models/users.js";
 
 const app = express();
 
@@ -48,6 +49,23 @@ app.post('/items', async(req, res)=>{//B# we added an async to add the item crea
     }
     // console.log(req.body)//A# 1# When making a req from Thunder Client, the request is undefined.I need to convert to json in order to define it and get the data by using middleware which will be in line 6 and 7. but this not change what we get in the browser. 
     // res.send(req.body);
+})
+
+app.put('/items/:id', async(req, res)=>{// here were still using th id path to update item using it's ID so we need to use the path to the ID.
+    try{
+        const {id} =req.params;
+        const item = await Item.findByIdAndUpdate(id, req.body)// the req.body is the information the user gave to update that comes from the req parameter of the function.
+        
+        if(!item){// this check if item exist before updating. If item to update does not exist we will send an error message.
+            return res.status(404).json({message: "Item not found"});
+        }else{
+            const updatedItem = await Item.findById(id);// this is the updated item stored in the variable "updatedItem"
+            res.status(200).json(updatedItem);
+        }  
+    }
+catch(error){
+    res.status(500).json({message: error.message});
+}
 })
 
 
