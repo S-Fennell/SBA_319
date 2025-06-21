@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import Item from "./models/items.js";
 import User from "./models/users.js";
+import Review from "./models/reviews.js";
 
 const app = express();
 
@@ -140,7 +141,68 @@ app.delete('/users/:id', async(req, rea) =>{
         res.status(500).json({message: error.message});
     }
 });
-//====== posts ===============
+//====== reviews ===============
+app.get('/reviews', async(req,res)=>{
+    try{
+        const review = await Review.find({});
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+app.get('/reviews/:id', async(req, res)=>{
+    try{
+        const{id} = req.params;
+        const review = await Review.findById(id);
+        res.status(200).json({review});
+
+    }catch (error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+
+
+app.post('/reviews', async(req, res)=>{
+    try{
+        const review = await Review.create(req.body)
+        res.status(200).json(review)
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+
+})
+
+app.put('/reviews/:id', async(req, res)=>{
+    try{
+        const {id} =req.params;
+        const review = await Review.findByIdAndUpdate(id, req.body)
+        
+        if(!review){
+            return res.status(404).json({message: "Item not found"});
+        }else{
+            const updatedItem = await User.findById(id);
+            res.status(200).json(updatedItem);
+        }  
+    }
+catch(error){
+    res.status(500).json({message: error.message});
+}
+});
+
+app.delete('/reviews/:id', async(req, rea) =>{
+    try{
+        const {id} = req.params;
+        const review = await Review.findByIdAndDelete(id);
+        if(!review){
+            return res.status(404).json({message: `Item Not Found!`});
+        }
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+
 
 app.listen(3000, ()=>{
     console.log(`listening on port: ${PORT}`)
