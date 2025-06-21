@@ -12,7 +12,7 @@ const reviewsSchema = new mongoose.Schema(
                     type: String
                 },
                 age:{
-                    type: String,
+                    type: Number,
                     requird: false
                 },
                 comment:{
