@@ -1,8 +1,8 @@
-import express from 'express';
+import express, { Router } from 'express';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import Item from "./models/items.js";
-import Users from "./models/users.js";
+import User from "./models/users.js";
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 app.get('/', (req, res) =>{
     res.send(`Excuse me miss`);
 });
-
+//=============items=================
 //C# Now I want to creat code that will let me see the added items like I can see them in my database
 //this is for viewing listings
 app.get('/items', async(req,res)=>{
@@ -37,6 +37,7 @@ app.get('/items/:id', async(req, res)=>{
         res.status(500).json({message: error.message});
     }
 });
+
 
 
 //A# We are going to start here after creating our item model schema/blue print
@@ -66,9 +67,80 @@ app.put('/items/:id', async(req, res)=>{// here were still using th id path to u
 catch(error){
     res.status(500).json({message: error.message});
 }
+});
+
+app.delete('/items/:id', async(req, rea) =>{
+    try{
+        const {id} = req.params;
+        const item = await Item.findByIdAndDelete(id);
+        if(!item){
+            return res.status(404).json({message: `Item Not Found!`});
+        }
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+//==============.  users. ==========================================
+app.get('/users', async(req,res)=>{
+    try{
+        const user = await User.find({});
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+app.get('/users/:id', async(req, res)=>{
+    try{
+        const{id} = req.params;
+        const user = await User.findById(id);
+        res.status(200).json({user});
+
+    }catch (error){
+        res.status(500).json({message: error.message});
+    }
+});
+
+
+
+app.post('/users', async(req, res)=>{
+    try{
+        const user = await User.create(req.body)
+        res.status(200).json(user)
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+
 })
 
+app.put('/users/:id', async(req, res)=>{
+    try{
+        const {id} =req.params;
+        const user = await User.findByIdAndUpdate(id, req.body)
+        
+        if(!user){
+            return res.status(404).json({message: "Item not found"});
+        }else{
+            const updatedItem = await User.findById(id);
+            res.status(200).json(updatedItem);
+        }  
+    }
+catch(error){
+    res.status(500).json({message: error.message});
+}
+});
 
+app.delete('/users/:id', async(req, rea) =>{
+    try{
+        const {id} = req.params;
+        const user = await User.findByIdAndDelete(id);
+        if(!user){
+            return res.status(404).json({message: `Item Not Found!`});
+        }
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+});
+//====== posts ===============
 
 app.listen(3000, ()=>{
     console.log(`listening on port: ${PORT}`)
@@ -78,7 +150,7 @@ await mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
     console.log(`Connected to database!`);
     app.listen(PORT, ()=>{
-        console.log(`Server is rinning on port: ${PORT}`);
+        console.log(`Server is running on port: ${PORT}`);
     });
 }).catch(()=>{
     console.log(`Connection Failed!`);

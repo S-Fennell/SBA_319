@@ -21,7 +21,8 @@ const itemSchema = new mongoose.Schema(
         cost:{
             type: Number,
             required: true
-        }
+        },
+        reviews:[{}]
     },
     {
         timestamps: true

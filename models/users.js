@@ -2,26 +2,22 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
     {
+        username:{
+            type: String,
+            required: true
+        },
         name:{
             type: String,
             required: true
         },
-        brand:{
-            type: String,
-            required: false
-        },
-        weight:{
-            type: String,
-            required: false
-        },
-        qty:{
+        age:{
             type: Number,
             required: true
         },
-        cost:{
-            type: Number,
-            required: true
-        }
+        address:{
+            type: String,
+            required: false
+        },
     },
     {
         timestamps: true
