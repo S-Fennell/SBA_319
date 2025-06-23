@@ -22,5 +22,4 @@ Delete /reviews/:id
 
 
 
-Post / Reviews
 
