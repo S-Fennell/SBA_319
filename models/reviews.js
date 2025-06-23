@@ -26,4 +26,5 @@ const reviewsSchema = new mongoose.Schema(
     }
 );
 
+reviewsSchema.index({item: String});
 export default mongoose.model("Review", reviewsSchema, "reviews");

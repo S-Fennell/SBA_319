@@ -28,5 +28,5 @@ const itemSchema = new mongoose.Schema(
     }
 );
 
-//itemSchema.in
+itemSchema.index({name: String});
 export default mongoose.model("Item", itemSchema, "items");
