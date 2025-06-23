@@ -119,7 +119,7 @@ app.put('/users/:id', async(req, res)=>{
         const user = await User.findByIdAndUpdate(id, req.body)
         
         if(!user){
-            return res.status(404).json({message: "Item not found"});
+            return res.status(404).json({message: "User not found"});
         }else{
             const updatedItem = await User.findById(id);
             res.status(200).json(updatedItem);
@@ -135,7 +135,7 @@ app.delete('/users/:id', async(req, rea) =>{
         const {id} = req.params;
         const user = await User.findByIdAndDelete(id);
         if(!user){
-            return res.status(404).json({message: `Item Not Found!`});
+            return res.status(404).json({message: `User ${id} Not Found!`});
         }
     }catch(error){
         res.status(500).json({message: error.message});
@@ -165,6 +165,7 @@ app.get('/reviews/:id', async(req, res)=>{
 
 app.post('/reviews', async(req, res)=>{
     try{
+        console.log("review")
         const review = await Review.create(req.body)
         res.status(200).json(review)
     }catch(error){
@@ -180,7 +181,7 @@ app.put('/reviews/:id', async(req, res)=>{
         const review = await Review.findByIdAndUpdate(id, req.body)
         
         if(!review){
-            return res.status(404).json({message: "Item not found"});
+            return res.status(404).json({message: "Review not found"});
         }else{
             const updatedItem = await User.findById(id);
             res.status(200).json(updatedItem);
@@ -196,7 +197,7 @@ app.delete('/reviews/:id', async(req, rea) =>{
         const {id} = req.params;
         const review = await Review.findByIdAndDelete(id);
         if(!review){
-            return res.status(404).json({message: `Item Not Found!`});
+            return res.status(404).json({message: `Review id Not Found!`});
         }
     }catch(error){
         res.status(500).json({message: error.message});

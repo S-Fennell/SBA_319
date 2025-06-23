@@ -22,11 +22,11 @@ const itemSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        reviews:[{}]
     },
     {
         timestamps: true
     }
 );
 
+//itemSchema.in
 export default mongoose.model("Item", itemSchema, "items");
