@@ -4,7 +4,8 @@ const itemSchema = new mongoose.Schema(
     {
         name:{
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         brand:{
             type: String,
@@ -28,5 +29,5 @@ const itemSchema = new mongoose.Schema(
     }
 );
 
-itemSchema.index({name: String});
+
 export default mongoose.model("Item", itemSchema, "items");
