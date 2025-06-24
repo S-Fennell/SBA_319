@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express, { Router } from 'express';// Not using
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import Item from "./models/items.js";
@@ -18,7 +18,7 @@ app.get('/', (req, res) =>{
 //=============items=================
 //C# Now I want to creat code that will let me see the added items like I can see them in my database
 //this is for viewing listings
-app.get('/items', async(req,res)=>{
+app.get('/api/items', async(req,res)=>{
     try{
         const item = await Item.find({});//this will find everything in the database
         res.status(200).json(item)// if successful we will send this response with the item information. when the item are found it will stored in the item variable. The empty bracet indicates all/everything in the database and turning it to json form
@@ -28,7 +28,7 @@ app.get('/items', async(req,res)=>{
 });
 
 //D# as a follow up to part C# I want to get just one item instead of all the products and get it by id.
-app.get('/items/:id', async(req, res)=>{
+app.get('/api/items/:id', async(req, res)=>{
     try{
         const{id} = req.params;
         const item = await Item.findById(id);
@@ -42,7 +42,7 @@ app.get('/items/:id', async(req, res)=>{
 
 
 //A# We are going to start here after creating our item model schema/blue print
-app.post('/items', async(req, res)=>{//B# we added an async to add the item create
+app.post('/api/items', async(req, res)=>{//B# we added an async to add the item create
     try{//B# now we want to add multiple things and save the data in our blue print model through here. We'll use try and catch to do this to catch any errors that do not match our schema
         const item = await Item.create(req.body)//B# saving out item with this "item.create". the eq.body hold the added product or  new user if it was a user instead of a product. this is the request inside the body being sent
         res.status(200).json(item)// the status will say if the addition was a success. json will be the item. with post products are added to my mongodb database with it's own id number.
@@ -53,7 +53,7 @@ app.post('/items', async(req, res)=>{//B# we added an async to add the item crea
     // res.send(req.body);
 })
 
-app.put('/items/:id', async(req, res)=>{// here were still using th id path to update item using it's ID so we need to use the path to the ID.
+app.put('/api/items/:id', async(req, res)=>{// here were still using th id path to update item using it's ID so we need to use the path to the ID.
     try{
         const {id} =req.params;
         const item = await Item.findByIdAndUpdate(id, req.body)// the req.body is the information the user gave to update that comes from the req parameter of the function.
@@ -70,7 +70,7 @@ catch(error){
 }
 });
 
-app.delete('/items/:id', async(req, rea) =>{
+app.delete('/api/items/:id', async(req, rea) =>{
     try{
         const {id} = req.params;
         const item = await Item.findByIdAndDelete(id);
@@ -82,7 +82,7 @@ app.delete('/items/:id', async(req, rea) =>{
     }
 });
 //==============.  users. ==========================================
-app.get('/users', async(req,res)=>{
+app.get('/api/users', async(req,res)=>{
     try{
         const user = await User.find({});
     }catch(error){
@@ -90,7 +90,7 @@ app.get('/users', async(req,res)=>{
     }
 });
 
-app.get('/users/:id', async(req, res)=>{
+app.get('/api/users/:id', async(req, res)=>{
     try{
         const{id} = req.params;
         const user = await User.findById(id);
@@ -103,17 +103,16 @@ app.get('/users/:id', async(req, res)=>{
 
 
 
-app.post('/users', async(req, res)=>{
+app.post('/api/users', async(req, res)=>{
     try{
         const user = await User.create(req.body)
         res.status(200).json(user)
     }catch(error){
         res.status(500).json({message: error.message});
     }
-
 })
 
-app.put('/users/:id', async(req, res)=>{
+app.put('/api/users/:id', async(req, res)=>{
     try{
         const {id} =req.params;
         const user = await User.findByIdAndUpdate(id, req.body)
@@ -130,7 +129,7 @@ catch(error){
 }
 });
 
-app.delete('/users/:id', async(req, rea) =>{
+app.delete('/api/users/:id', async(req, rea) =>{
     try{
         const {id} = req.params;
         const user = await User.findByIdAndDelete(id);
@@ -142,7 +141,7 @@ app.delete('/users/:id', async(req, rea) =>{
     }
 });
 //====== reviews ===============
-app.get('/reviews', async(req,res)=>{
+app.get('/api/reviews', async(req,res)=>{
     try{
         const review = await Review.find({});
     }catch(error){
@@ -150,7 +149,7 @@ app.get('/reviews', async(req,res)=>{
     }
 });
 
-app.get('/reviews/:id', async(req, res)=>{
+app.get('/api/reviews/:id', async(req, res)=>{
     try{
         const{id} = req.params;
         const review = await Review.findById(id);
@@ -163,7 +162,7 @@ app.get('/reviews/:id', async(req, res)=>{
 
 
 
-app.post('/reviews', async(req, res)=>{
+app.post('/api/reviews', async(req, res)=>{
     try{
         console.log("review")
         const review = await Review.create(req.body)
@@ -175,7 +174,7 @@ app.post('/reviews', async(req, res)=>{
 
 
 
-app.put('/reviews/:id', async(req, res)=>{
+app.put('/api/reviews/:id', async(req, res)=>{
     try{
         const {id} =req.params;
         const review = await Review.findByIdAndUpdate(id, req.body)
@@ -192,7 +191,7 @@ catch(error){
 }
 });
 
-app.delete('/reviews/:id', async(req, rea) =>{
+app.delete('/api/reviews/:id', async(req, rea) =>{
     try{
         const {id} = req.params;
         const review = await Review.findByIdAndDelete(id);
