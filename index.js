@@ -120,8 +120,8 @@ app.put('/api/users/:id', async(req, res)=>{
         if(!user){
             return res.status(404).json({message: "User not found"});
         }else{
-            const updatedItem = await User.findById(id);
-            res.status(200).json(updatedItem);
+            const updateduser = await User.findById(id);
+            res.status(200).json(updateduser);
         }  
     }
 catch(error){
@@ -182,8 +182,8 @@ app.put('/api/reviews/:id', async(req, res)=>{
         if(!review){
             return res.status(404).json({message: "Review not found"});
         }else{
-            const updatedItem = await User.findById(id);
-            res.status(200).json(updatedItem);
+            const updatedReview = await User.findById(id);
+            res.status(200).json(updatedReview);
         }  
     }
 catch(error){
